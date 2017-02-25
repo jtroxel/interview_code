@@ -50,6 +50,7 @@ public class BoggleTest {
             }
         });
         Set<String> allWords = solver.allPossibleWords();
+        System.out.println(allWords);
 
         assert(allWords.contains("GO"));
         assert(allWords.contains("GOD"));
