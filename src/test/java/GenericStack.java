@@ -1,5 +1,3 @@
-package test;
-
 public interface GenericStack<T> {
     public void push(T obj);
 
