@@ -7,6 +7,7 @@
 
 const lineArtNumbers = {
     " _ | ||_|": 0,
+    // TODO other digits
     // "     |  |": 0,
     // " _  _||_ ": 0,
 };
@@ -14,7 +15,11 @@ function OCRParser() {
     return {
         matchUnfolded: function (unfoldedNumbers) {
             return lineArtNumbers[unfoldedNumbers[unfoldedNum].join('')];
-        }, parseUnfoldedNumbers: function (unfoldedNumbers) {
+        },
+        getUnfoldedNumsFromRawRow: function (rawRows) {
+            return [];
+        },
+        parseUnfoldedNumbers: function (unfoldedNumbers) {
             let retStr = "";
             for (unfoldedNum in unfoldedNumbers) {
                 retStr += this.matchUnfolded(unfoldedNumbers);

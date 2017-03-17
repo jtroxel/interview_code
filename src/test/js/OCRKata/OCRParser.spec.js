@@ -36,19 +36,35 @@ describe(OCRParser, function () {
     // - Read a line of raw input
     // - Group raw lines by number of rows for an account number
     // - Create a list of unfolded of character data [['', '_', '', '|', '', ...], []]
+
+    describe("getUnfoldedNumsFromRawRow", function () {
+        let subject = new OCRParser();
+        it("can combine raw 0s", function () {
+            let rawRows = [
+                ' _  _  _  _  _  _  _  _ ',
+                '| || || || || || || || |',
+                '|_||_||_||_||_||_||_||_|'
+            ]
+            expect(subject.getUnfoldedNumsFromRawRow(rawRows)).toBe(unfoldedZeros());
+        });
+    });
     // - Parse list of unfolded character data into an account number
 
     describe("parseUnfoldedNumbers", function() {
+        let subject = new OCRParser();
         it("can parse 00000000", function () {
-            let subject = new OCRParser();
-            let unfoldedNumber = [];
-            for (let i = 0; i < 8; i++) {
-                unfoldedNumber.push(" _ | ||_|".split(''))
-            }
+            let unfoldedNumber = unfoldedZeros();
             expect(subject.parseUnfoldedNumbers(unfoldedNumber)).toBe("00000000");
         });
 
     });
+    function unfoldedZeros() {
+        let unfoldedNumber = [];
+        for (let i = 0; i < 8; i++) {
+            unfoldedNumber.push(" _ | ||_|".split(''))
+        }
+        return unfoldedNumber;
+    }
 
 });
 
