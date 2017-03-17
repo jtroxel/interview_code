@@ -28,6 +28,12 @@ describe("Lib smoke test", function () {
 });
 
 describe(OCRParser, function () {
+    let rawRowsZeros = [
+        ' _  _  _  _  _  _  _  _ ',
+        '| || || || || || || || |',
+        '|_||_||_||_||_||_||_||_|'
+    ]
+
     it("can be constructed", function() {
         expect(new OCRParser()).not.toBe(null);
     })
@@ -36,19 +42,28 @@ describe(OCRParser, function () {
     // - Read a line of raw input
     // - Group raw lines by number of rows for an account number
     // - Create a list of unfolded of character data [['', '_', '', '|', '', ...], []]
+    // - Parse list of unfolded character data into an account number
+
+    // *** Entry point / collaboration test for OCRParser
+    describe("parseFile", function () {
+        it("coordinates collaborators", function () {
+            let lineReader = td.function('lineReader');
+            td.when(lineReader()).thenReturn(...rawRowsZeros, "", null);
+
+            let subject = new OCRParser(lineReader);
+
+            expect(subject.parseFile()).toBe(["00000000"]);
+        });
+
+    });
 
     describe("getUnfoldedNumsFromRawRow", function () {
         let subject = new OCRParser();
-        it("can combine raw 0s", function () {
-            let rawRows = [
-                ' _  _  _  _  _  _  _  _ ',
-                '| || || || || || || || |',
-                '|_||_||_||_||_||_||_||_|'
-            ]
-            expect(subject.getUnfoldedNumsFromRawRow(rawRows)).toBe(unfoldedZeros());
+        // TODO
+        xit("can combine raw 0s", function () {
+            expect(subject.getUnfoldedNumsFromRawRow(rawRowsZeros)).toBe(unfoldedZeros());
         });
     });
-    // - Parse list of unfolded character data into an account number
 
     describe("parseUnfoldedNumbers", function() {
         let subject = new OCRParser();
@@ -58,6 +73,7 @@ describe(OCRParser, function () {
         });
 
     });
+
     function unfoldedZeros() {
         let unfoldedNumber = [];
         for (let i = 0; i < 8; i++) {
