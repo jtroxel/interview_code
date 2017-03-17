@@ -8,6 +8,7 @@ var td = require('testdouble');
 var Jasmine = require('jasmine');
 var j = new Jasmine();
 
+var OCRParser = require('/Users/jtroxel/dev/codecraft/interview_code/src/main/js/OCRKata/OCRParser.js');
 // =============
 describe("Lib smoke test", function () {
     describe("Jasmine", function () {
@@ -26,8 +27,11 @@ describe("Lib smoke test", function () {
     });
 });
 
-
-
+describe(OCRParser, function () {
+    it("exists", function() {
+        expect(new OCRParser()).not.toBe(null);
+    })
+});
 
 // =============
 j.execute();
