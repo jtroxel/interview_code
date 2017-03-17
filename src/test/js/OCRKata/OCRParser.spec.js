@@ -28,9 +28,34 @@ describe("Lib smoke test", function () {
 });
 
 describe(OCRParser, function () {
-    it("exists", function() {
+    it("can be constructed", function() {
         expect(new OCRParser()).not.toBe(null);
     })
+
+    // What does a OCR Parser need to "take this file and parse it into actual account numbers"
+    // - Read a line of raw input
+    // - Group raw lines by number of rows for an account number
+    // - Create a list of unfolded of character data [['', '_', '', '|', '', ...], []]
+    // - Parse list of unfolded character data into an account number
+
+    describe("parseUnfoldedNumbers", function() {
+        it("can parse 00000000", function () {
+            let subject = new OCRParser();
+            let unfoldedNumber = [
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', ''],
+                ['', '_', '', '|', '', '|', '|', '', '|', '', '_', '']
+            ];
+            expect(subject.parseUnfoldedNumbers(unfoldedNumber)).toBe("00000000");
+        });
+
+    });
+
 });
 
 // =============

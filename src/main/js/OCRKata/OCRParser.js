@@ -6,7 +6,11 @@
  */
 
 function OCRParser() {
-
+    return {
+        parseUnfoldedNumbers: function (unfoldedNumber) {
+            return "";
+        }
+    }
 }
 
 module.exports = OCRParser;
