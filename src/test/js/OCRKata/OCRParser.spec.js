@@ -41,16 +41,10 @@ describe(OCRParser, function () {
     describe("parseUnfoldedNumbers", function() {
         it("can parse 00000000", function () {
             let subject = new OCRParser();
-            let unfoldedNumber = [
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-                [' ', '_', ' ', '|', ' ', '|', '|', '_', '|'],
-            ];
+            let unfoldedNumber = [];
+            for (let i = 0; i < 8; i++) {
+                unfoldedNumber.push(" _ | ||_|".split(''))
+            }
             expect(subject.parseUnfoldedNumbers(unfoldedNumber)).toBe("00000000");
         });
 

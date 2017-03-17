@@ -12,10 +12,12 @@ const lineArtNumbers = {
 };
 function OCRParser() {
     return {
-        parseUnfoldedNumbers: function (unfoldedNumbers) {
+        matchUnfolded: function (unfoldedNumbers) {
+            return lineArtNumbers[unfoldedNumbers[unfoldedNum].join('')];
+        }, parseUnfoldedNumbers: function (unfoldedNumbers) {
             let retStr = "";
             for (unfoldedNum in unfoldedNumbers) {
-                retStr += lineArtNumbers[unfoldedNumbers[unfoldedNum].join('')];
+                retStr += this.matchUnfolded(unfoldedNumbers);
             }
             return retStr;
         }
