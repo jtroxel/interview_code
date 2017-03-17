@@ -42,5 +42,14 @@ public class SlugGeneratorTest {
     public void caseTwoDigits() {
         String slug = slugger.generate(36);
         assertEquals("10", slug);
+        slug = slugger.generate(37);
+        assertEquals("11", slug);
+    }
+    @Test
+    public void caseMoreDigits() {
+        String slug = slugger.generate(36^3 + 1);
+        assertEquals("101", slug);
+        slug = slugger.generate(37);
+//        assertEquals("11", slug);
     }
 }
