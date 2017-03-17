@@ -5,10 +5,19 @@
  *
  */
 
+const lineArtNumbers = {
+    " _ | ||_|": 0,
+    // "     |  |": 0,
+    // " _  _||_ ": 0,
+};
 function OCRParser() {
     return {
-        parseUnfoldedNumbers: function (unfoldedNumber) {
-            return "";
+        parseUnfoldedNumbers: function (unfoldedNumbers) {
+            let retStr = "";
+            for (unfoldedNum in unfoldedNumbers) {
+                retStr += lineArtNumbers[unfoldedNumbers[unfoldedNum].join('')];
+            }
+            return retStr;
         }
     }
 }
