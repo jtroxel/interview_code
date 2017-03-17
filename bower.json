@@ -1,0 +1,22 @@
+{
+  "name": "java_interview",
+  "authors": [
+    "jtroxel <johntrox@gmail.com>"
+  ],
+  "description": "random project for interview tests, katas, and prep",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jasmine-core": "jasmine#^2.5.2",
+    "testdouble": "testdouble/testdouble.js#^2.0.1"
+  }
+}
