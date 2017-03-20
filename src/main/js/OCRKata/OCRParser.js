@@ -31,7 +31,7 @@ function OCRParser(reader) {
         let row;
         let group = [];
         let retAccountNums = [];
-        this.accountReader.parseGroups(function (group) {
+        this.accountReader.parseAccountNumberRow(function (group) {
             retAccountNums.push(_this.parseUnfoldedNumbers(_this.accountReader.unfoldRawRow(group)));
         });
         return retAccountNums;

@@ -48,14 +48,14 @@ describe(OCRParser, function () {
     // - Parse list of unfolded character data into an account number
 
     // *** Entry point / collaboration test for OCRParser
-    describe("parseGroups", function () {
-        let reader, subject, unfolder;
+    describe("parseAccountNumberRow", function () {
+        let reader, subjectunfolder;
         beforeEach(function() {
             reader = new (td.replace(subjectPath + 'AccountFileReader.js'));
-            subject = new OCRParser(reader, unfolder);
+            subject = new OCRParser(reader);
         });
         it("coordinates collaborators", function () {
-            td.when(reader.parseGroups()).thenCallback(rawRowsZeros);
+            td.when(reader.parseAccountNumberRow()).thenCallback(rawRowsZeros);
             td.when(reader.unfoldRawRow(rawRowsZeros)).thenReturn(unfoldedZeros());
 
 

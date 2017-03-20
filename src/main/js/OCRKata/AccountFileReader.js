@@ -7,16 +7,16 @@ AccountFileReader.prototype = {
         return [];
     },
 
-    parseGroups: function(groupHandler) {
-        let row;
-        let group = [];
+    parseAccountNumberRow: function(rowHandler) {
+        let line;
+        let accountNumberRow = [];
         let retAccountNums = [];
-        while ((row = this.reader()) !== null) {
+        while ((line = this.reader()) !== null) {
             // - Group raw lines by number of rows for an account number
-            if (row !== "") {
-                group.push(row);
+            if (line !== "") {
+                accountNumberRow.push(line);
             } else {
-                groupHandler(group);
+                rowHandler(accountNumberRow);
             }
         }
     }
