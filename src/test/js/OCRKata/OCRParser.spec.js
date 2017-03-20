@@ -49,33 +49,18 @@ describe(OCRParser, function () {
 
     // *** Entry point / collaboration test for OCRParser
     describe("parseGroups", function () {
-        let reader, subject;
+        let reader, subject, unfolder;
         beforeEach(function() {
             reader = new (td.replace(subjectPath + 'AccountFileReader.js'));
-            subject = new OCRParser(reader);
+            unfolder = td.function('unfolder');
+            subject = new OCRParser(reader, unfolder);
         });
         it("coordinates collaborators", function () {
             td.when(reader.parseGroups()).thenCallback(rawRowsZeros);
+            td.when(unfolder(rawRowsZeros)).thenReturn(unfoldedZeros());
 
 
-            expect(subject.parseAccounts()).toBe(["00000000"]);
-        });
-
-    });
-
-    describe("getUnfoldedNumsFromRawRow", function () {
-        let subject = new OCRParser();
-        // TODO
-        xit("can combine raw 0s", function () {
-            expect(subject.getUnfoldedNumsFromRawRow(rawRowsZeros)).toBe(unfoldedZeros());
-        });
-    });
-
-    describe("parseUnfoldedNumbers", function() {
-        let subject = new OCRParser();
-        xit("can parse 00000000", function () {
-            let unfoldedNumber = unfoldedZeros();
-            expect(subject.parseUnfoldedNumbers(unfoldedNumber)).toBe("00000000");
+            expect(subject.parseAccounts()).toContain("00000000");
         });
 
     });
