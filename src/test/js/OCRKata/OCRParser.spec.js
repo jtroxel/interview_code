@@ -52,12 +52,11 @@ describe(OCRParser, function () {
         let reader, subject, unfolder;
         beforeEach(function() {
             reader = new (td.replace(subjectPath + 'AccountFileReader.js'));
-            unfolder = td.function('unfolder');
             subject = new OCRParser(reader, unfolder);
         });
         it("coordinates collaborators", function () {
             td.when(reader.parseGroups()).thenCallback(rawRowsZeros);
-            td.when(unfolder(rawRowsZeros)).thenReturn(unfoldedZeros());
+            td.when(reader.unfoldRawRow(rawRowsZeros)).thenReturn(unfoldedZeros());
 
 
             expect(subject.parseAccounts()).toContain("00000000");

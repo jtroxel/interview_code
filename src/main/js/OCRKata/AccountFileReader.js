@@ -3,7 +3,7 @@ function AccountFileReader(lineStreamer) {
     }
 
 AccountFileReader.prototype = {
-    getUnfoldedNumsFromRawRow: function(rawRow) {
+    unfoldRawRow: function(rawRow) {
         return [];
     },
 

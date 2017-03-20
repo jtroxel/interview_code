@@ -11,14 +11,10 @@ const lineArtNumbers = {
     // "     |  |": 0,
     // " _  _||_ ": 0,
 };
-function OCRParser(reader, unfolder) {
+function OCRParser(reader) {
     this.accountReader = reader; // e.g. new AccountFileReader(stream)
-    this.unfolder = unfolder || this.getUnfoldedNumsFromRawRow;
     const _this = this;
 
-    this.getUnfoldedNumsFromRawRow = function (rawRow) {
-        return [];
-    };
     this.matchUnfolded = function (unfoldedArr) {
         return lineArtNumbers[unfoldedArr.join('')];
     };
@@ -36,7 +32,7 @@ function OCRParser(reader, unfolder) {
         let group = [];
         let retAccountNums = [];
         this.accountReader.parseGroups(function (group) {
-            retAccountNums.push(_this.parseUnfoldedNumbers(_this.unfolder(group)));
+            retAccountNums.push(_this.parseUnfoldedNumbers(_this.accountReader.unfoldRawRow(group)));
         });
         return retAccountNums;
     };
