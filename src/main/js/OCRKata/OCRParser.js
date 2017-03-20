@@ -4,50 +4,42 @@
  * Time: 9:52 AM
  *
  */
-
+var AccountFileReader = require('./AccountFileReader');
 const lineArtNumbers = {
     " _ | ||_|": 0,
     // TODO other digits
     // "     |  |": 0,
     // " _  _||_ ": 0,
 };
-function OCRParser(read) {
+function OCRParser(reader) {
+    this.accountReader = reader; // e.g. new AccountFileReader(stream)
+    const _this = this;
 
-    return {
-        lineReader: read,
-        // TODO:  make these injectable?
-        // unfolder: this.getUnfoldedNumsFromRawRow,
-        // parser: this.parseUnfoldedNumbers,
+    this.getUnfoldedNumsFromRawRow = function (rawRow) {
+        return [];
+    };
+    this.matchUnfolded = function (unfoldedArr) {
+        return lineArtNumbers[unfoldedArr.join('')];
+    };
 
-        matchUnfolded: function (unfoldedNumbers) {
-            return lineArtNumbers[unfoldedNumbers[unfoldedNum].join('')];
-        },
-        getUnfoldedNumsFromRawRow: function (rawRow) {
-            return [];
-        },
-        parseFile: function() {
-            let row;
-            let group = [];
-            let retAccountNums = [];
-            while ((row = this.lineReader()) !== null) {
-                // - Group raw lines by number of rows for an account number
-                if (row !== "") {
-                    group.push(row);
-                } else {
-                    retAccountNums.push(this.parseUnfoldedNumbers(this.getUnfoldedNumsFromRawRow(group)));
-                    group = [];
-                }
-            }
-            return retAccountNums;
-        },
-        parseUnfoldedNumbers: function (unfoldedNumbers) {
-            let retStr = "";
-            for (unfoldedNum in unfoldedNumbers) {
-                retStr += this.matchUnfolded(unfoldedNumbers);
-            }
-            return retStr;
+    this.parseUnfoldedNumbers = function (unfoldedNumbers) {
+        let retStr = "";
+        for (var unfoldedNum in unfoldedNumbers) {
+            retStr += this.matchUnfolded(unfoldedNumbers[unfoldedNum]);
         }
-    }
-}
+        return retStr;
+    };
+
+    this.parseAccounts = function () {
+        let row;
+        let group = [];
+        let retAccountNums = [];
+        this.accountReader.parseGroups(function (group) {
+            retAccountNums.push(_this.parseUnfoldedNumbers(group));
+        });
+        return retAccountNums;
+    };
+
+};
 
 module.exports = OCRParser;

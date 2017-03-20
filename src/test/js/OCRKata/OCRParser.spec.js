@@ -7,8 +7,11 @@
 var td = require('testdouble');
 var Jasmine = require('jasmine');
 var j = new Jasmine();
+var subjectPath = 'src/main/js/OCRKata/';
 
-var OCRParser = require('/Users/jtroxel/dev/codecraft/interview_code/src/main/js/OCRKata/OCRParser.js');
+var OCRParser = require(subjectPath + 'OCRParser.js');
+// var AccountFileReader = td.replace(subjectPath + 'AccountFileReader.js');
+
 // =============
 describe("Lib smoke test", function () {
     describe("Jasmine", function () {
@@ -45,14 +48,17 @@ describe(OCRParser, function () {
     // - Parse list of unfolded character data into an account number
 
     // *** Entry point / collaboration test for OCRParser
-    describe("parseFile", function () {
+    describe("parseGroups", function () {
+        let reader, subject;
+        beforeEach(function() {
+            reader = new (td.replace(subjectPath + 'AccountFileReader.js'));
+            subject = new OCRParser(reader);
+        });
         it("coordinates collaborators", function () {
-            let lineReader = td.function('lineReader');
-            td.when(lineReader()).thenReturn(...rawRowsZeros, "", null);
+            td.when(reader.parseGroups()).thenCallback(rawRowsZeros);
 
-            let subject = new OCRParser(lineReader);
 
-            expect(subject.parseFile()).toBe(["00000000"]);
+            expect(subject.parseAccounts()).toBe(["00000000"]);
         });
 
     });
@@ -67,7 +73,7 @@ describe(OCRParser, function () {
 
     describe("parseUnfoldedNumbers", function() {
         let subject = new OCRParser();
-        it("can parse 00000000", function () {
+        xit("can parse 00000000", function () {
             let unfoldedNumber = unfoldedZeros();
             expect(subject.parseUnfoldedNumbers(unfoldedNumber)).toBe("00000000");
         });
