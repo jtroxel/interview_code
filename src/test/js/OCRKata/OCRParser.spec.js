@@ -31,6 +31,10 @@ describe("Lib smoke test", function () {
 });
 
 describe(OCRParser, function () {
+
+    afterEach(function () {
+        td.reset();
+    });
     let rawRowsZeros = [
         ' _  _  _  _  _  _  _  _ ',
         '| || || || || || || || |',
@@ -39,7 +43,7 @@ describe(OCRParser, function () {
 
     it("can be constructed", function() {
         expect(new OCRParser()).not.toBe(null);
-    })
+    });
 
     // What does a OCR Parser need to "take this file and parse it into actual account numbers"
     // - Read a line of raw input
@@ -49,7 +53,7 @@ describe(OCRParser, function () {
 
     // *** Entry point / collaboration test for OCRParser
     describe("parseAccountNumberRow", function () {
-        let reader, subjectunfolder;
+        let reader, subject;
         beforeEach(function() {
             reader = new (td.replace(subjectPath + 'AccountFileReader.js'));
             subject = new OCRParser(reader);
@@ -59,7 +63,26 @@ describe(OCRParser, function () {
             td.when(reader.unfoldRawRow(rawRowsZeros)).thenReturn(unfoldedZeros());
 
 
-            expect(subject.parseAccounts()).toContain("00000000");
+            expect(subject.parseAccounts()).toEqual(["00000000"]);
+        });
+
+    });
+
+    describe("AccountFileReader", function() {
+        let subject;
+        beforeEach(function() {
+            subject = new (require(subjectPath + 'AccountFileReader.js'));
+        });
+
+        describe("unfoldRawRow", function () {
+            it("unfolds zeros", function () {
+                expect(subject.unfoldRawRow(rawRowsZeros)).toEqual(unfoldedZeros())
+            });
+        });
+        describe("parseAccountNumberRow", function () {
+        //     it("unfolds zeros", function () {
+        //         expect(subject.unfoldRawRow(rawRowsZeros)).toEqual(unfoldedZeros())
+        //     });
         });
 
     });

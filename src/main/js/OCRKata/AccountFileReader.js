@@ -4,7 +4,15 @@ function AccountFileReader(lineStreamer) {
 
 AccountFileReader.prototype = {
     unfoldRawRow: function(rawRow) {
-        return [];
+        let retRow = [];
+        for(let digit = 0; digit < 8; digit++) {
+            retRow[digit] = [];
+            for (let digitRow = 0; digitRow < 3; digitRow++) {
+                let start = digit * 3;
+                retRow[digit].push(...rawRow[digitRow].substring(start, start+3).split(''))
+            }
+        }
+        return retRow;
     },
 
     parseAccountNumberRow: function(rowHandler) {
