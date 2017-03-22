@@ -1,10 +1,12 @@
 function AccountFileReader(lineStreamer) {
-        this.reader = lineStreamer;
+        this.lineReader = lineStreamer;
     }
 
 AccountFileReader.prototype = {
     unfoldRawRow: function(rawRow) {
         let retRow = [];
+
+        // TODO: javascript array "stream" methods: [1..8].forEach(f -> {})...
         for(let digit = 0; digit < 8; digit++) {
             retRow[digit] = [];
             for (let digitRow = 0; digitRow < 3; digitRow++) {
@@ -19,7 +21,8 @@ AccountFileReader.prototype = {
         let line;
         let accountNumberRow = [];
         let retAccountNums = [];
-        while ((line = this.reader()) !== null) {
+        // TODO:  functional this.lineReader.eachRow do
+        while ((line = this.lineReader()) !== null) {
             // - Group raw lines by number of rows for an account number
             if (line !== "") {
                 accountNumberRow.push(line);

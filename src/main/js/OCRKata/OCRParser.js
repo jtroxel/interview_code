@@ -12,7 +12,7 @@ const lineArtNumbers = {
     // " _  _||_ ": 0,
 };
 function OCRParser(reader) {
-    this.accountReader = reader; // e.g. new AccountFileReader(stream)
+    this.accountReader = reader; // || new AccountFileReader(stream)
     const _this = this;
 
     this.matchUnfolded = function (unfoldedArr) {

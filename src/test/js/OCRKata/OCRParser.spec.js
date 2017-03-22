@@ -52,7 +52,7 @@ describe(OCRParser, function () {
     // - Parse list of unfolded character data into an account number
 
     // *** Entry point / collaboration test for OCRParser
-    describe("parseAccountNumberRow", function () {
+    describe("OCRParser", function () {
         let reader, subject;
         beforeEach(function() {
             reader = new (td.replace(subjectPath + 'AccountFileReader.js'));
@@ -80,7 +80,7 @@ describe(OCRParser, function () {
             });
         });
         describe("parseAccountNumberRow", function () {
-        //     it("unfolds zeros", function () {
+        //     it("parses zeros", function () {
         //         expect(subject.unfoldRawRow(rawRowsZeros)).toEqual(unfoldedZeros())
         //     });
         });
