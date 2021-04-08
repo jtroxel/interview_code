@@ -1,3 +1,4 @@
+package groovy
 
 def fib(term) {
   if (term < 3) {

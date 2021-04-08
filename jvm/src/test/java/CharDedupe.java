@@ -1,5 +1,3 @@
-package test;
-
 /**
  * Created by IntelliJ IDEA.
  * User: jtroxel

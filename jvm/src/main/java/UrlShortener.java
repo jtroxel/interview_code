@@ -80,4 +80,29 @@ public class UrlShortener {
         store.add(candidateSlug, "");
         return candidateSlug;
     }
+
+    /**
+     * UrlShortener.SlugGenerator: TODO
+     *
+     * @author <a href="mailto:jtroxel@yahoo.com">John Troxel</a>
+     */
+    public static class SlugGenerator {
+
+        private int base = 36; // [0-9][a-z]
+
+        public String generate(int id) {
+
+            if (id >= base) {
+                return generate(id / base) + generate(id % base);
+            }
+
+            if (id <= 9) {
+                return "" + id;
+            } else if (id >= 10) {
+                return "" + (char)('a' + (id-10));
+            }
+
+            return "0";
+        }
+    }
 }
