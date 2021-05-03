@@ -17,7 +17,7 @@ df_from_each_file = (pd.read_csv(f) for f in all_files)
 df   = pd.concat(df_from_each_file, ignore_index=True)
 
 # df = pd.read_csv('../../data/csse/daily/01-21-2021.csv')
-first = df[:30]
+df = df[:200]
 
 fatality_by_country = df[['Country_Region', 'Last_Update', 'Deaths']].groupby(['Country_Region', 'Last_Update']).agg({'Deaths': 'sum', 'Country_Region': 'first', 'Last_Update': 'first'})
     # .groupby(['Last_Update']).sum('Deaths')
