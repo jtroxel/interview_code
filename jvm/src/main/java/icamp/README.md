@@ -27,9 +27,11 @@ Assume that the array has the exact amount of space to accommodate the result.`
 Finder:
  - pos - init based on size
  - scan() - get next value.  ret pos?
+
 Builder:
  - pos - init based on size
  - build(new_val)
+
 Start with Traverser?
  - pos
  - direction (enum)
