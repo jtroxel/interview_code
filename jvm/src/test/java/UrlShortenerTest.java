@@ -4,8 +4,8 @@
  * Time: 4:35 PM
  */
 
-import org.junit.Before;
-import org.junit.Test;
+import io.kotest.core.spec.style.AnnotationSpec;
+import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -46,7 +46,7 @@ public class UrlShortenerTest {
         }
     };
 
-    @Before
+    @AnnotationSpec.Before
     public void setupShortener() {
         shortener = new UrlShortener(testMapStore);
     }

@@ -1,17 +1,18 @@
-package boggle; /**
+package boggle;
+/**
  * User: jtroxel
  * Date: 2/24/17
  * Time: 2:15 PM
  */
 
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Set;
 
-import static junit.framework.TestCase.assertEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * boggle.BoggleTest: TODO
