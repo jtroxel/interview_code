@@ -11,11 +11,11 @@ PROBLEM: Array Partition
  Rearrange the array so that all zeroes are at the beginning of the array.
 
 Prime Example:
- [4,2,0,1,0,3,0] -> [0,0,0,4,1,2,3]
+ [4,2,0,1,0,3,0] -> [0,0,0,4,1,2,3] (Order???)
 
 Questions to Clarify:
 Q. Optimize for space or time?  A. Time more important, but both.
-Q. Has to be in the Ex order, same L->R ordering as input?  A. NO
+Q. Has to be in the Ex order, same L->R ordering as input?  A. YES
 
 Additional Cases:
   Base: array[2] of just 0, 0
@@ -29,9 +29,11 @@ Solution Options / Notes:
 class ArrPartitionSpec : DescribeSpec({
     fun partitionRule() = { arrVal: Int -> arrVal == 0 }
     context("Array Partition") {
-        context("Prime Case: Mixed array, P2 order not important") {
+        context("Prime Case: Mixed array, P2 order important") {
             val pCase: IntArray = intArrayOf(4,2,0,1,0,3,0)
-            partitionBy(pCase, partitionRule()) shouldBe intArrayOf(0,0,0,3,1,2,4)
+            val partitionedArr = partitionBy(pCase, partitionRule())
+            partitionedArr.size shouldBe pCase.size
+            partitionedArr shouldBe intArrayOf(0,0,0,4,2,1,3)
         }
         context("Base Case: [0,0] -> [0,0]") {
             val baseCase: IntArray = intArrayOf(0,0)
@@ -43,11 +45,11 @@ class ArrPartitionSpec : DescribeSpec({
         }
         context("Edge Case: empty array") {
             val edgeCase: IntArray = intArrayOf()
-            partitionBy(edgeCase, partitionRule()) shouldBe null
+            partitionBy(edgeCase, partitionRule()) shouldBe intArrayOf()
         }
         xcontext("Example Case: ...") {
             val exCase: IntArray = intArrayOf()
-            partitionBy(exCase, partitionRule()) shouldBe null
+            partitionBy(exCase, partitionRule()) shouldBe intArrayOf()
         }
     }
 })

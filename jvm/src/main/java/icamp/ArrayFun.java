@@ -21,17 +21,19 @@ public class ArrayFun {
         int arrSize = input.length;
         int[] retArr = new int[arrSize];
         int part1idx = 0;
-        int part2idx = arrSize -1;
+        int part2idx = 0;
         for (int inVal : input) {
             // If current partition2 val matched partitioning, move to end of p1
             if (fn.apply(inVal)) {
-                retArr[part1idx++] = inVal; // put new val at end of part1
+                input[part1idx++] = inVal; // put new val at end of part1
 
-            } else {
-                retArr[part2idx--] = inVal;
+            } else { // add to returnArr in order
+                retArr[part2idx++] = inVal;
             }
         }
-        return retArr;
+        System.arraycopy(retArr, 0, input, part1idx, part2idx);
+        retArr = null;
+        return input;
     }
 
     // 1,2,3,5,6,7
