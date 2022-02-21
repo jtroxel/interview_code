@@ -1,7 +1,11 @@
 package icamp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 public class ArrayFun {
@@ -17,23 +21,57 @@ public class ArrayFun {
         return inArray;
     }
 
+    //             withClue("[4,2,0,1,0,3,0]") {
     public static int[] partitionBy(int[] input, Function<Integer, Boolean> fn) {
         int arrSize = input.length;
-        int[] retArr = new int[arrSize];
-        int part1idx = 0;
-        int part2idx = 0;
+//        int[] retArr = new int[arrSize];
+        int part1end = 0;
+        int part2tart = 0;
         for (int inVal : input) {
-            // If current partition2 val matched partitioning, move to end of p1
+            // If current partition2 val matched partitioning
             if (fn.apply(inVal)) {
-                input[part1idx++] = inVal; // put new val at end of part1
+                moveLastFirst(input, part1end, part2tart);
+                part1end += 1; // inc end of P1
 
-            } else { // add to returnArr in order
-                retArr[part2idx++] = inVal;
+            } else {
+                part2tart++; // inc start of P2
             }
         }
-        System.arraycopy(retArr, 0, input, part1idx, part2idx);
-        retArr = null;
         return input;
+    }
+
+    private static void moveLastFirst(int[] input, int start, int end) {
+        int hold = input[end];
+        //Shuffle left
+        while (end > start) {
+            input[end - 1] = input[end--];
+        }
+        input[start] = hold;
+    }
+
+
+    @NotNull
+    public static Object maxSumSubarray(@NotNull int[] inputArr) {
+        int curSum = 0;
+        int maxSum = 0;
+        int maxStart = 0;
+        int maxEnd = maxStart;
+        for (int run = maxStart; run <= inputArr.length - 1; run++) {
+            int curVal = inputArr[run];
+            // Current Left < current, and old max also < current
+            if ((curSum + curVal) < curVal && maxSum < curVal) {
+                maxStart = run;
+                curSum = curVal;
+            } else {
+                curSum += curVal;
+            }
+            // Leave the end until subarray sum goes up
+            if (curSum > maxSum) {
+                maxEnd = run;
+                maxSum = curSum;
+            }
+        }
+        return Arrays.copyOfRange(inputArr, maxStart, maxEnd + 1);
     }
 
     // 1,2,3,5,6,7
@@ -65,18 +103,7 @@ public class ArrayFun {
     private static void swapAll(int[] inArray) {
 
         // Switch the first/last element
-        swapElement(inArray, 0, inArray.length - 1);
-    }
-
-    private static void swapElement(int[] inArray, int startPos, int endPos) {
-        int lastVal = inArray[endPos]; // keep original value
-        inArray[endPos] = inArray[startPos];
-        inArray[startPos] = lastVal;
-        // If we just swapped the middle 2, done
-        if (endPos - startPos < 2) {
-            return;
-        }
-        swapElement(inArray, startPos + 1, endPos - 1);
+        swapAllElements(inArray, 0, inArray.length - 1);
     }
 
     public static int[] doubleEvens(int[] arrayWithSpace) throws IllegalArgumentException {
@@ -109,6 +136,21 @@ public class ArrayFun {
         }
         arrayWithSpace[toIdx] = arrayWithSpace[fromIdx];
         return --toIdx;
+    }
+
+    private static void swapAllElements(int[] inArray, int startPos, int endPos) {
+        swapElement(inArray, startPos, endPos);
+        // If we just swapped the middle 2, done
+        if (endPos - startPos < 2) {
+            return;
+        }
+        swapElement(inArray, startPos + 1, endPos - 1);
+    }
+
+    public static void swapElement(int[] inArray, int startPos, int endPos) {
+        int lastVal = inArray[endPos]; // keep original value
+        inArray[endPos] = inArray[startPos];
+        inArray[startPos] = lastVal;
     }
 
     private static boolean isEven(int arrayWithSpace) {

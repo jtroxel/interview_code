@@ -1,6 +1,7 @@
 package icamp
 
 import icamp.ArrayFun.partitionBy
+import io.kotest.assertions.withClue
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
@@ -30,18 +31,20 @@ class ArrPartitionSpec : DescribeSpec({
     fun partitionRule() = { arrVal: Int -> arrVal == 0 }
     context("Array Partition") {
         context("Prime Case: Mixed array, P2 order important") {
-            val pCase: IntArray = intArrayOf(4,2,0,1,0,3,0)
+            val pCase: IntArray = intArrayOf(4, 2, 0, 1, 0, 3, 0)
             val partitionedArr = partitionBy(pCase, partitionRule())
-            partitionedArr.size shouldBe pCase.size
-            partitionedArr shouldBe intArrayOf(0,0,0,4,2,1,3)
+            withClue("With input [4,2,0,1,0,3,0]") {
+                partitionedArr.size shouldBe pCase.size
+                partitionedArr shouldBe intArrayOf(0, 0, 0, 4, 2, 1, 3)
+            }
         }
         context("Base Case: [0,0] -> [0,0]") {
-            val baseCase: IntArray = intArrayOf(0,0)
+            val baseCase: IntArray = intArrayOf(0, 0)
             partitionBy(baseCase, partitionRule()) shouldBe baseCase
         }
         context("Base Case: [1,0] -> [0,1]") {
-            val baseCase: IntArray = intArrayOf(1,0)
-            partitionBy(baseCase, partitionRule()) shouldBe intArrayOf(0,1)
+            val baseCase: IntArray = intArrayOf(1, 0)
+            partitionBy(baseCase, partitionRule()) shouldBe intArrayOf(0, 1)
         }
         context("Edge Case: empty array") {
             val edgeCase: IntArray = intArrayOf()
