@@ -1,7 +1,7 @@
 package icamp
 
 import icamp.ArrayFun;
-import icamp.ArrayFun.maxSumSubarray
+import icamp.Subarray.maxSumSubarray
 
 
 import io.kotest.core.spec.style.DescribeSpec

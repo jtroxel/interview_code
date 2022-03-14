@@ -50,30 +50,6 @@ public class ArrayFun {
     }
 
 
-    @NotNull
-    public static Object maxSumSubarray(@NotNull int[] inputArr) {
-        int curSum = 0;
-        int maxSum = 0;
-        int maxStart = 0;
-        int maxEnd = maxStart;
-        for (int run = maxStart; run <= inputArr.length - 1; run++) {
-            int curVal = inputArr[run];
-            // Current Left < current, and old max also < current
-            if ((curSum + curVal) < curVal && maxSum < curVal) {
-                maxStart = run;
-                curSum = curVal;
-            } else {
-                curSum += curVal;
-            }
-            // Leave the end until subarray sum goes up
-            if (curSum > maxSum) {
-                maxEnd = run;
-                maxSum = curSum;
-            }
-        }
-        return Arrays.copyOfRange(inputArr, maxStart, maxEnd + 1);
-    }
-
     // 1,2,3,5,6,7
     public static int[] sum2for(int[] inArray, int target) {
         if (inArray == null || inArray.length == 0) {
